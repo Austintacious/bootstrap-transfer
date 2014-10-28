@@ -5,7 +5,8 @@
         /* #=============================================================================== */
         /* # Expose public functions */
         /* #=============================================================================== */
-        this.populate = function(input) { _this.populate(input); };
+        this.populate_available = function(input) { _this.populate_available(input); };
+        this.populate_selected = function(input) { _this.populate_selected(input); };
         this.set_values = function(values) { _this.set_values(values); };
         this.get_values = function() { return _this.get_values(); };
         return this.each(function(){
@@ -55,13 +56,23 @@
             /* #=============================================================================== */
             /* # Implement public functions */
             /* #=============================================================================== */
-            _this.populate = function(input) {
+            _this.populate_available = function(input) {
                 // input: [{value:_, content:_}]
                 _this.$filter_input.val('');
                 for (var i in input) {
                     var e = input[i];
                     _this._remaining_list.push([{value:e.value, content:e.content}, true]);
                     _this._target_list.push([{value:e.value, content:e.content}, false]);
+                }
+                _this.update_lists(true);
+            };
+            _this.populate_selected = function(input) {
+                // input: [{value:_, content:_}]
+                _this.$filter_input.val('');
+                for (var i in input) {
+                    var e = input[i];
+                    _this._remaining_list.push([{value:e.value, content:e.content}, false]);
+                    _this._target_list.push([{value:e.value, content:e.content}, true]);
                 }
                 _this.update_lists(true);
             };
@@ -146,16 +157,16 @@
                 <tr>\
                     <td width="50%">\
                         <div class="selector-available">\
-                            <h2>Available</h2>\
+                            <h2>Disponíveis</h2>\
                             <div class="selector-filter">\
                                 <table width="100%" border="0">\
                                     <tr>\
                                         <td style="width:14px;">\
-                                            <i class="icon-search"></i>\
+                                            <i class="fa fa-search fa-2x"></i>\
                                         </td>\
                                         <td>\
                                             <div style="padding-left:10px;">\
-                                                <input type="text" class="filter-input">\
+                                                <input type="text" class="filter-input form-control">\
                                             </div>\
                                         </td>\
                                     </tr>\
@@ -163,7 +174,7 @@
                             </div>\
                             <select multiple="multiple" class="filtered remaining">\
                             </select>\
-                            <a href="#" class="selector-chooseall">Choose all</a>\
+                            <a href="#" class="selector-chooseall">Selecionar tudo</a>\
                         </div>\
                     </td>\
                     <td>\
@@ -174,13 +185,11 @@
                     </td>\
                     <td width="50%">\
                         <div class="selector-chosen">\
-                            <h2>Chosen</h2>\
-                            <div class="selector-filter right">\
-                                <p>Select then click</p><span class="illustration"></span>\
-                            </div>\
+                            <h2>Selecionados</h2>\
+                            <div class="selector-filter right"></div>\
                             <select multiple="multiple" class="filtered target">\
                             </select>\
-                            <a href="#" class="selector-clearall">Clear all</a>\
+                            <a href="#" class="selector-clearall">Limpar tudo</a>\
                         </div>\
                     </td>\
                 </tr>\
